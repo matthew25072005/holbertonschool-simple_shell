@@ -19,11 +19,7 @@ int main(void)
 			return (0);
 		}
 		line[read - 1] = '\0';
-		if (access(line, X_OK) == 0)
-		{
-			system(line);
-		}
-		else
+		if (system(line) == -1)
 		{
 			printf("%s: No such file or directory\n", line);
 		}
