@@ -8,7 +8,7 @@ int main(void)
 	char *token;
 	char *args[ARG_MAX];
 	int i;
-b	pid_t pid;
+	pid_t pid;
 
 	while (1)
 	{
