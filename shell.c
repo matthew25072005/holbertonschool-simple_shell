@@ -20,19 +20,12 @@ int main(void)
             free(line);
             exit(EXIT_SUCCESS);
         }
-        line[read - 1] = '\0';  // remove newline at the end
+        line[read - 1] = '\0';
 
-        // Ignore trailing spaces
         while (read > 1 && line[read - 2] == ' ')
         {
             line[read - 2] = '\0';
             read--;
-        }
-
-        if (strcmp(line, "exit") == 0)
-        {
-            free(line);
-            exit(EXIT_SUCCESS);
         }
 
         i = 0;
@@ -45,12 +38,18 @@ int main(void)
         }
         args[i] = NULL;
 
+        if (strcmp(args[0], "exit") == 0)
+        {
+            free(line);
+            exit(EXIT_SUCCESS);
+        }
+
         pid = fork();
         if (pid == 0)
         {
             if (execve(args[0], args, NULL) == -1)
             {
-                perror(line);
+                perror(args[0]);
                 _exit(EXIT_FAILURE);
             }
         }
