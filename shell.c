@@ -20,7 +20,14 @@ int main(void)
             free(line);
             exit(EXIT_SUCCESS);
         }
-        line[read - 1] = '\0';
+        line[read - 1] = '\0';  // remove newline at the end
+
+        // Ignore trailing spaces
+        while (read > 1 && line[read - 2] == ' ')
+        {
+            line[read - 2] = '\0';
+            read--;
+        }
 
         if (strcmp(line, "exit") == 0)
         {
