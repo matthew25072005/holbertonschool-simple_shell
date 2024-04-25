@@ -1,15 +1,14 @@
 #include "shell.h"
 
 /**
- * search_path - Searches for a command in the system's PATH
- * @cmd: The command to search for
- *
- * This function takes a command and searches for it in the directories
- * specified in the system's PATH environment variable. If the command is
- * found, it returns the absolute path to the command. Otherwise, it returns NULL.
- *
- * Return: The absolute path to the command if found, otherwise NULL
- */
+* search_path - Searches for a command in the system's PATH
+* @cmd: The command to search for
+*
+* This function takes a command and searches for it in the directories
+* specified in the system's PATH environment variable. If the command is
+* found, it returns the absolute path to the command. Otherwise,it returns NULL
+* Return: The absolute path to the command if found, otherwise NULL
+*/
 
 char *search_path(char *cmd)
 {
