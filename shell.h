@@ -7,9 +7,12 @@
 #include <string.h>
 #include <unistd.h>
 
-#define ARG_MAX 500
+#define ARG_MAX 64
 
-void execute_command(char *args[]);
+char *search_path(char *cmd);
+void read_command(char **line, size_t *len);
+void parse_command(char *line, char **args);
+void execute_command(char **args);
 
 #endif
 
