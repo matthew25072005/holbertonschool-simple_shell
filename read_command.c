@@ -1,5 +1,14 @@
 #include "shell.h"
 
+/**
+ * read_command - Reads a command from standard input
+ * @line: Pointer to the line buffer
+ * @len: Pointer to the line buffer length
+ *
+ * This function reads a line from the standard input and stores it in the
+ * provided buffer. It also trims trailing spaces from the line.
+ */
+
 void read_command(char **line, size_t *len)
 {
 	ssize_t read;
