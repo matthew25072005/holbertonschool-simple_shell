@@ -1,5 +1,23 @@
 #include "shell.h"
 
+char *search_path(char *cmd)
+{
+    char *PATH = getenv("PATH");
+    char *dir = strtok(PATH, ":");
+    char *abs_cmd = malloc(500);
+
+    while (dir != NULL)
+    {
+        sprintf(abs_cmd, "%s/%s", dir, cmd);
+        if (access(abs_cmd, F_OK) != -1)
+            return abs_cmd;
+        dir = strtok(NULL, ":");
+    }
+
+    free(abs_cmd);
+    return NULL;
+}
+
 int main(void)
 {
     char *line = NULL;
@@ -21,13 +39,11 @@ int main(void)
             exit(EXIT_SUCCESS);
         }
         line[read - 1] = '\0';
-
         while (read > 1 && line[read - 2] == ' ')
         {
             line[read - 2] = '\0';
             read--;
         }
-
         i = 0;
         token = strtok(line, " ");
         while (token != NULL)
@@ -37,7 +53,6 @@ int main(void)
             token = strtok(NULL, " ");
         }
         args[i] = NULL;
-
         if (strcmp(args[0], "exit") == 0)
         {
             free(line);
@@ -47,11 +62,21 @@ int main(void)
         pid = fork();
         if (pid == 0)
         {
-            if (execve(args[0], args, NULL) == -1)
+            char *abs_cmd = search_path(args[0]);
+            if (abs_cmd != NULL)
             {
-                perror(args[0]);
-                _exit(EXIT_FAILURE);
+                if (execve(abs_cmd, args, NULL) == -1)
+                {
+                    perror(abs_cmd);
+                    _exit(EXIT_FAILURE);
+                }
             }
+            else
+            {
+                printf("%s: command not found\n", args[0]);
+            }
+
+            free(abs_cmd);
         }
         else if (pid < 0)
         {
