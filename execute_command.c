@@ -47,6 +47,9 @@ void execute_command(char **args)
 	}
 	else
 	{
-		wait(NULL) > 0;
+		while (wait(NULL) > 0)
+		{
+			/* empty loop body */
+		}
 	}
 }
